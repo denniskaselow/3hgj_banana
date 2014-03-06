@@ -29,7 +29,7 @@ class Game extends GameBase {
 
   List<EntitySystem> getSystems() {
     return [
-            new CanvasCleaningSystem(canvas),
+            new CanvasCleaningSystem(canvas, fillStyle: '#00B0EC'),
             new BuildingRenderingSystem(ctx),
             new RenderingSystem(ctx),
             new FpsRenderingSystem(ctx)
