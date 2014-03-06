@@ -1,0 +1,28 @@
+{"frames": {
+
+"banana.png":
+{
+	"frame": {"x":34,"y":2,"w":7,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":7,"h":20},
+	"sourceSize": {"w":7,"h":20}
+},
+"player.png":
+{
+	"frame": {"x":2,"y":2,"w":30,"h":45},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":45},
+	"sourceSize": {"w":30,"h":45}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "assets.png",
+	"format": "RGBA8888",
+	"size": {"w":64,"h":64},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b74858871684a02e24c5f92eb8048579:7d0429edf69d96312a245a41d820efd4:a759b6bbc8381ac9c472b28f589ad0d6$"
+}
+}
