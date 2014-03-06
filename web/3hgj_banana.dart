@@ -2,7 +2,8 @@ import 'package:3hgj_banana/client.dart';
 
 @MirrorsUsed(targets: const [RenderingSystem, BuildingRenderingSystem,
                              InputListeningSystem, InputRenderingSystem,
-                             PlayerActionSystem, MovementSystem, GravitySystem
+                             PlayerActionSystem, MovementSystem, GravitySystem,
+                             CollisionSystem
                             ])
 import 'dart:mirrors';
 
@@ -33,6 +34,7 @@ class Game extends GameBase {
     return [
             new MovementSystem(),
             new GravitySystem(),
+            new CollisionSystem(),
             new InputListeningSystem(),
             new CanvasCleaningSystem(canvas, fillStyle: '#00B0EC'),
             new BuildingRenderingSystem(ctx),

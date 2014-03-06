@@ -21,10 +21,10 @@ class PlayerActionSystem extends EntityProcessingSystem {
                                 new Player(p.id),
                                 new Velocity(a.angle, v.velocity),
                                 new Renderable('banana.png')]);
-      entity.removeComponent(AngleInput);
-      entity.removeComponent(VelocityInput);
-      entity.changedInWorld();
-      currentPlayer = (p.id + 1) % 2;
+      a.done = false;
+      a.angle = null;
+      v.done = false;
+      v.velocity = null;
     }
   }
 }
@@ -52,3 +52,33 @@ class GravitySystem extends EntityProcessingSystem {
   }
 }
 
+class CollisionSystem extends EntitySystem {
+  ComponentMapper<Transform> tm;
+  ComponentMapper<Player> pm;
+
+  CollisionSystem() : super(Aspect.getAspectForAllOf([Transform, Player]));
+
+  @override
+  void processEntities(ReadOnlyBag<Entity> entitiesInBag) {
+    var entities = new List<Entity>();
+    entitiesInBag.forEach((entity) => entities.add(entity));
+
+    for (int i = 0; i < entities.length - 1; i++) {
+      var entity1 = entities[i];
+      var t1 = tm.get(entity1);
+      var r1 = pm.get(entity1);
+      for (int j = i + 1; j < entities.length; j++) {
+        var entity2 = entities[j];
+        var t2 = tm.get(entity2);
+        var r2 = pm.get(entity2);
+        if (t2.pos.distanceToSquared(t1.pos) < 100) {
+          entity1.deleteFromWorld();
+          entity2.deleteFromWorld();
+        }
+      }
+    }
+  }
+
+  @override
+  bool checkProcessing() => true;
+}
