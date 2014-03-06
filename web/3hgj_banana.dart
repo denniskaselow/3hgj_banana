@@ -1,6 +1,8 @@
 import 'package:3hgj_banana/client.dart';
 
-@MirrorsUsed(targets: const [RenderingSystem, BuildingRenderingSystem
+@MirrorsUsed(targets: const [RenderingSystem, BuildingRenderingSystem,
+                             InputListeningSystem, InputRenderingSystem,
+                             PlayerActionSystem, MovementSystem, GravitySystem
                             ])
 import 'dart:mirrors';
 
@@ -20,19 +22,23 @@ class Game extends GameBase {
       var hue = random.nextInt(255);
       addEntity([new Transform(40 + i * 80, 0), new Building(height, hue)]);
       if (i == p1) {
-        addEntity([new Transform(40 + i * 80, 600 - height - 20), new Player(1)]);
+        addEntity([new Transform(40 + i * 80, 600 - height - 20), new Player(0), new AngleInput(), new VelocityInput()]);
       } else if (i == p2) {
-        addEntity([new Transform(40 + i * 80, 600 - height - 20), new Player(2)]);
+        addEntity([new Transform(40 + i * 80, 600 - height - 20), new Player(1)]);
       }
     }
   }
 
   List<EntitySystem> getSystems() {
     return [
+            new MovementSystem(),
+            new GravitySystem(),
+            new InputListeningSystem(),
             new CanvasCleaningSystem(canvas, fillStyle: '#00B0EC'),
             new BuildingRenderingSystem(ctx),
             new RenderingSystem(ctx),
-            new FpsRenderingSystem(ctx)
+            new InputRenderingSystem(ctx),
+            new PlayerActionSystem(),
     ];
   }
 

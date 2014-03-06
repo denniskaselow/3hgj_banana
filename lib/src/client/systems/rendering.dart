@@ -54,3 +54,28 @@ class BuildingRenderingSystem extends EntityProcessingSystem {
     inBuffer = true;
   }
 }
+
+class InputRenderingSystem extends EntityProcessingSystem {
+  ComponentMapper<AngleInput> am;
+  ComponentMapper<VelocityInput> vm;
+  ComponentMapper<Player> pm;
+  CanvasRenderingContext2D ctx;
+  InputRenderingSystem(this.ctx) : super(Aspect.getAspectForAllOf([Player, AngleInput, VelocityInput]));
+
+
+  @override
+  void processEntity(Entity entity) {
+    var p = pm.get(entity);
+    var v = vm.get(entity);
+    var a = am.get(entity);
+
+    var value = a.angle == null ? '' : a.angle;
+    ctx.fillText('Angle', p.id == 0 ? 10 : 710, 20);
+    ctx.fillText(': $value', p.id == 0 ? 60 : 760, 20);
+    if (a.done) {
+      value = v.velocity == null ? '' : v.velocity;
+      ctx.fillText('Velocity', p.id == 0 ? 10 : 710, 35);
+      ctx.fillText(': $value', p.id == 0 ? 60 : 760, 35);
+    }
+  }
+}

@@ -16,3 +16,21 @@ class Building extends Component {
   int hue;
   Building(this.height, this.hue);
 }
+
+class AngleInput extends Component {
+  int angle;
+  bool done = false;
+}
+
+class VelocityInput extends Component {
+  int velocity;
+  bool done = false;
+}
+
+class Velocity extends Component {
+  Vector2 velocity;
+  Velocity(int deg, int velocity) {
+    var rad = 0.0174532925 * (deg + 90);
+    this.velocity = new Vector2(sin(rad) * velocity * 0.1, cos(rad) * velocity * 0.1);
+  }
+}
