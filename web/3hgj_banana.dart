@@ -12,7 +12,7 @@ void main() {
 
 class Game extends GameBase {
 
-  Game() : super.noAssets('3hgj_banana', 'canvas', 800, 600);
+  Game() : super('3hgj_banana', 'canvas', 800, 600, bodyDefsName: null);
 
   void createEntities() {
     var p1 = 1 + random.nextInt(3);
@@ -22,9 +22,9 @@ class Game extends GameBase {
       var hue = random.nextInt(255);
       addEntity([new Transform(40 + i * 80, 0), new Building(height, hue)]);
       if (i == p1) {
-        addEntity([new Transform(40 + i * 80, 600 - height - 20), new Player(0), new AngleInput(), new VelocityInput()]);
+        addEntity([new Transform(40 + i * 80, 600 - height - 20), new Player(0), new AngleInput(), new VelocityInput(), new Renderable('player.png')]);
       } else if (i == p2) {
-        addEntity([new Transform(40 + i * 80, 600 - height - 20), new Player(1)]);
+        addEntity([new Transform(40 + i * 80, 600 - height - 20), new Player(1), new Renderable('player.png')]);
       }
     }
   }
@@ -36,7 +36,7 @@ class Game extends GameBase {
             new InputListeningSystem(),
             new CanvasCleaningSystem(canvas, fillStyle: '#00B0EC'),
             new BuildingRenderingSystem(ctx),
-            new RenderingSystem(ctx),
+            new RenderingSystem(ctx, spriteSheet),
             new InputRenderingSystem(ctx),
             new PlayerActionSystem(),
     ];

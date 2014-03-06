@@ -34,3 +34,8 @@ class Velocity extends Component {
     this.velocity = new Vector2(sin(rad) * velocity * 0.1, cos(rad) * velocity * 0.1);
   }
 }
+
+class Renderable extends Component {
+  String sprite;
+  Renderable(this.sprite);
+}

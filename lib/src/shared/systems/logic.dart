@@ -19,7 +19,8 @@ class PlayerActionSystem extends EntityProcessingSystem {
       var t = tm.get(entity);
       world.createAndAddEntity([new Transform(p.id == 0 ? t.pos.x - 15 : t.pos.x + 15, t.pos.y - 5),
                                 new Player(p.id),
-                                new Velocity(a.angle, v.velocity)]);
+                                new Velocity(a.angle, v.velocity),
+                                new Renderable('banana.png')]);
       entity.removeComponent(AngleInput);
       entity.removeComponent(VelocityInput);
       entity.changedInWorld();
@@ -50,3 +51,4 @@ class GravitySystem extends EntityProcessingSystem {
     vm.get(entity).velocity.y += 0.1;
   }
 }
+

@@ -3,15 +3,18 @@ part of client;
 
 class RenderingSystem extends EntityProcessingSystem {
   ComponentMapper<Transform> tm;
+  ComponentMapper<Renderable> rm;
   CanvasRenderingContext2D ctx;
-
-  RenderingSystem(this.ctx) : super(Aspect.getAspectForAllOf([Transform, Player]));
+  SpriteSheet sheet;
+  RenderingSystem(this.ctx, this.sheet) : super(Aspect.getAspectForAllOf([Transform, Renderable]));
 
   @override
   void processEntity(Entity entity) {
     var t = tm.get(entity);
-    ctx..fillStyle = 'black'
-       ..fillRect(t.pos.x - 10, t.pos.y - 20, 20, 40);
+    var r = rm.get(entity);
+
+    var sprite = sheet.sprites[r.sprite];
+    ctx.drawImageToRect(sheet.image, new Rectangle(sprite.dst.left + t.pos.x, sprite.dst.top + t.pos.y, sprite.dst.width, sprite.dst.height), sourceRect: sprite.src);
   }
 }
 
@@ -70,6 +73,7 @@ class InputRenderingSystem extends EntityProcessingSystem {
     var a = am.get(entity);
 
     var value = a.angle == null ? '' : a.angle;
+    ctx.fillStyle = 'black';
     ctx.fillText('Angle', p.id == 0 ? 10 : 710, 20);
     ctx.fillText(': $value', p.id == 0 ? 60 : 760, 20);
     if (a.done) {
