@@ -76,10 +76,8 @@ class InputRenderingSystem extends EntityProcessingSystem {
     ctx.fillStyle = 'black';
     ctx.fillText('Angle', p.id == 0 ? 10 : 710, 20);
     ctx.fillText(': $value', p.id == 0 ? 60 : 760, 20);
-    if (a.done) {
-      value = v.velocity == null ? '' : v.velocity;
-      ctx.fillText('Velocity', p.id == 0 ? 10 : 710, 35);
-      ctx.fillText(': $value', p.id == 0 ? 60 : 760, 35);
-    }
+    value = v.velocity == null ? '' : v.velocity;
+    ctx.fillText('Velocity', p.id == 0 ? 10 : 710, 35);
+    ctx.fillText(': $value', p.id == 0 ? 60 : 760, 35);
   }
 }

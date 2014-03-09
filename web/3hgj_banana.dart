@@ -35,7 +35,7 @@ class Game extends GameBase {
             new MovementSystem(),
             new GravitySystem(),
             new CollisionSystem(),
-            new InputListeningSystem(),
+            new InputListeningSystem(canvas),
             new CanvasCleaningSystem(canvas, fillStyle: '#00B0EC'),
             new BuildingRenderingSystem(ctx),
             new RenderingSystem(ctx, spriteSheet),

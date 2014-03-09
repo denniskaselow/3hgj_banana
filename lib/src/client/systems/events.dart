@@ -3,57 +3,57 @@ part of client;
 class InputListeningSystem extends EntityProcessingSystem {
   ComponentMapper<AngleInput> am;
   ComponentMapper<VelocityInput> vm;
+  CanvasElement canvas;
 
-  int keyCode;
-  InputListeningSystem() : super(Aspect.getAspectForAllOf([AngleInput, VelocityInput]));
+  Point startPoint;
+  Point endPoint;
+  Point intermediatePoint;
+
+  InputListeningSystem(this.canvas) : super(Aspect.getAspectForAllOf([AngleInput, VelocityInput]));
 
   @override
   void initialize() {
-    window.onKeyDown.listen(handleKeyDown);
-  }
-
-  void handleKeyDown(KeyboardEvent event) {
-    keyCode = event.keyCode;
+    canvas.onMouseDown.listen((event) {
+      startPoint = event.offset;
+      intermediatePoint = startPoint;
+    });
+    canvas.onMouseUp.listen((event) => endPoint = event.offset);
+    canvas.onMouseMove.listen((event) {
+      if (null == endPoint && null != startPoint) {
+        intermediatePoint = event.offset;
+      }
+    });
   }
 
   @override
   void processEntity(Entity entity) {
     var a = am.get(entity);
     var v = vm.get(entity);
-    if (keyCode == KeyCode.ENTER) {
-      if (a.angle != null && !a.done) {
-        a.done = true;
-      } else if (a.done && v.velocity != null && !v.done) {
-        v.done = true;
-      }
-    } else if (keyCode == KeyCode.BACKSPACE) {
-      if (!a.done) {
-        a.angle = a.angle == null ? null : a.angle < 10 ? null : a.angle ~/ 10;
-      } else {
-        v.velocity = v.velocity == null ? null : v.velocity < 10 ? null : v.velocity ~/ 10;
-      }
+    Point diff;
+    if (null != endPoint) {
+      diff = endPoint - startPoint;
     } else {
-      int value;
-      if (keyCode >= KeyCode.ZERO && keyCode <= KeyCode.NINE) {
-        value = keyCode - KeyCode.ZERO;
-      } else if (keyCode >= KeyCode.NUM_ZERO && keyCode <= KeyCode.NUM_NINE) {
-        value = keyCode - KeyCode.NUM_ZERO;
-      }
-      if (!a.done) {
-        a.angle = a.angle == null ? value : a.angle * 10 + value;
-        a.angle = min(359, a.angle);
-      } else if (a.done && !v.done) {
-        v.velocity = v.velocity == null ? value : v.velocity * 10 + value;
-        v.velocity = min(999, v.velocity);
-      }
+      diff = intermediatePoint - startPoint;
+    }
+
+    v.velocity = diff.magnitude.toInt();
+    a.angle = (180/PI * atan2(-diff.y, diff.x)).toInt();
+    if (null != endPoint) {
+      a.done = true;
+      v.done = true;
     }
   }
 
   @override
   void end() {
-    keyCode = null;
+    if (null != endPoint) {
+      startPoint = null;
+      endPoint = null;
+      intermediatePoint = null;
+    }
   }
 
-  bool checkProcessing() => keyCode != null;
+  @override
+  bool checkProcessing() => null != startPoint;
 }
 
