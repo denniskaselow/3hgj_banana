@@ -59,7 +59,7 @@ class CollisionSystem extends EntitySystem {
   CollisionSystem() : super(Aspect.getAspectForAllOf([Transform, Player]));
 
   @override
-  void processEntities(ReadOnlyBag<Entity> entitiesInBag) {
+  void processEntities(Iterable<Entity> entitiesInBag) {
     var entities = new List<Entity>();
     entitiesInBag.forEach((entity) => entities.add(entity));
 
