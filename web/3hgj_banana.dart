@@ -1,4 +1,4 @@
-import 'package:3hgj_banana/client.dart';
+import 'package:threehgj_banana/client.dart';
 
 @MirrorsUsed(targets: const [RenderingSystem, BuildingRenderingSystem,
                              InputListeningSystem, InputRenderingSystem,
@@ -13,7 +13,7 @@ void main() {
 
 class Game extends GameBase {
 
-  Game() : super('3hgj_banana', 'canvas', 800, 600, bodyDefsName: null);
+  Game() : super('threehgj_banana', 'canvas', 800, 600, bodyDefsName: null);
 
   void createEntities() {
     var p1 = 1 + random.nextInt(3);
@@ -30,8 +30,8 @@ class Game extends GameBase {
     }
   }
 
-  List<EntitySystem> getSystems() {
-    return [
+  Map<int, List<EntitySystem>> getSystems() {
+    return {GameBase.rendering: [
             new MovementSystem(),
             new GravitySystem(),
             new CollisionSystem(),
@@ -41,13 +41,13 @@ class Game extends GameBase {
             new RenderingSystem(ctx, spriteSheet),
             new InputRenderingSystem(ctx),
             new PlayerActionSystem(),
-    ];
+    ]};
   }
 
-  Future onInit() {
+  onInit() {
   }
 
-  Future onInitDone() {
+  onInitDone() {
   }
 }
 

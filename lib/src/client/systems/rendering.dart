@@ -2,16 +2,16 @@ part of client;
 
 
 class RenderingSystem extends EntityProcessingSystem {
-  ComponentMapper<Transform> tm;
-  ComponentMapper<Renderable> rm;
+  Mapper<Transform> tm;
+  Mapper<Renderable> rm;
   CanvasRenderingContext2D ctx;
   SpriteSheet sheet;
   RenderingSystem(this.ctx, this.sheet) : super(Aspect.getAspectForAllOf([Transform, Renderable]));
 
   @override
   void processEntity(Entity entity) {
-    var t = tm.get(entity);
-    var r = rm.get(entity);
+    var t = tm[entity];
+    var r = rm[entity];
 
     var sprite = sheet.sprites[r.sprite];
     ctx.drawImageToRect(sheet.image, new Rectangle(sprite.dst.left + t.pos.x, sprite.dst.top + t.pos.y, sprite.dst.width, sprite.dst.height), sourceRect: sprite.src);
@@ -19,8 +19,8 @@ class RenderingSystem extends EntityProcessingSystem {
 }
 
 class BuildingRenderingSystem extends EntityProcessingSystem {
-  ComponentMapper<Transform> tm;
-  ComponentMapper<Building> bm;
+  Mapper<Transform> tm;
+  Mapper<Building> bm;
   CanvasRenderingContext2D ctx;
   CanvasElement buffer;
   var inBuffer = false;
@@ -31,8 +31,8 @@ class BuildingRenderingSystem extends EntityProcessingSystem {
 
   @override
   void processEntity(Entity entity) {
-    var t = tm.get(entity);
-    var b = bm.get(entity);
+    var t = tm[entity];
+    var b = bm[entity];
 
     if (!inBuffer) {
       var bufferCtx = buffer.context2D;
@@ -59,18 +59,18 @@ class BuildingRenderingSystem extends EntityProcessingSystem {
 }
 
 class InputRenderingSystem extends EntityProcessingSystem {
-  ComponentMapper<AngleInput> am;
-  ComponentMapper<VelocityInput> vm;
-  ComponentMapper<Player> pm;
+  Mapper<AngleInput> am;
+  Mapper<VelocityInput> vm;
+  Mapper<Player> pm;
   CanvasRenderingContext2D ctx;
   InputRenderingSystem(this.ctx) : super(Aspect.getAspectForAllOf([Player, AngleInput, VelocityInput]));
 
 
   @override
   void processEntity(Entity entity) {
-    var p = pm.get(entity);
-    var v = vm.get(entity);
-    var a = am.get(entity);
+    var p = pm[entity];
+    var v = vm[entity];
+    var a = am[entity];
 
     var value = a.angle == null ? '' : a.angle;
     ctx.fillStyle = 'black';

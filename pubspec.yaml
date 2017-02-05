@@ -1,9 +1,18 @@
-name: 3hgj_banana
+name: threehgj_banana
 description: A sample dartemis application
 dependencies:
   browser: any
   canvas_query: any
-  dartemis_toolbox: any
+  dartemis:
+    path: ../dartemis
+  dartemis_transformer:
+    path: ../dartemis_transformer
   gamedev_helpers:
-    git: https://github.com/denniskaselow/gamedev_helpers
+    path: ../gamedev_helpers
   vector_math: any
+  dart_to_js_script_rewriter: ^1.0.2
+transformers:
+- dart_to_js_script_rewriter
+- dartemis_transformer:
+    additionalLibraries:
+    - gamedev_helpers/gamedev_helpers.dart

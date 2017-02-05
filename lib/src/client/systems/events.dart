@@ -1,8 +1,8 @@
 part of client;
 
 class InputListeningSystem extends EntityProcessingSystem {
-  ComponentMapper<AngleInput> am;
-  ComponentMapper<VelocityInput> vm;
+  Mapper<AngleInput> am;
+  Mapper<VelocityInput> vm;
   CanvasElement canvas;
 
   Point startPoint;
@@ -27,8 +27,8 @@ class InputListeningSystem extends EntityProcessingSystem {
 
   @override
   void processEntity(Entity entity) {
-    var a = am.get(entity);
-    var v = vm.get(entity);
+    var a = am[entity];
+    var v = vm[entity];
     Point diff;
     if (null != endPoint) {
       diff = endPoint - startPoint;

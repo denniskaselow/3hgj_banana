@@ -10,5 +10,4 @@ part 'src/shared/components.dart';
 //part 'src/shared/systems/name.dart';
 part 'src/shared/systems/logic.dart';
 
-Random random = new Random();
 var currentPlayer = 0;
